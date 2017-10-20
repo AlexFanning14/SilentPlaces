@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SilentPlaces</string>
+    <string name="rv_no_places">You have no places added, click add new to get started!</string>
+    <string name="rv_error">Apologies, there has been an error connecting to the database</string>
+    <string name="menu_title">Add new Place</string>
+
+    <string name="fab_content_descip" translatable="true">Click here to add a new place.</string>
+
+
+    <string-array name="options_array">
+        <item>Silent</item>
+        <item>Vibrate</item>
+        <item>Volume</item>
+    </string-array>
+
+
+    <!--Detail Activ-->
+    <string name="btn_select">Select Location</string>
+    <string name="et_descript">Description</string>
+    <string name="tv_silent_mode">Silent Mode:</string>
+    <string name="tv_place_name">Place Name: </string>
+    <string name="tv_place_add">Address: </string>
+    <string name="lbl_place_detail">Place Details</string>
+    <string name="btn_add_add">Add</string>
+    <string name="btn_add_update">Add</string>
+    <string name="btn_clear">Clear</string>
+</resources>
