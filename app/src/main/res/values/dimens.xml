@@ -10,4 +10,8 @@
     <dimen name="fab_elavation">6dp</dimen>
     <dimen name="fab_pressed_trans">12dp</dimen>
 
+    <!--Borders-->
+    <dimen name="border_width">1dp</dimen>
+    <dimen name="border_height">2dp</dimen>
+
 </resources>

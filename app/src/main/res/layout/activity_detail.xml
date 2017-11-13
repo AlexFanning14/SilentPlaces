@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="7"
-    tools:context="com.example.alexfanning.silentplaces.DetailActivity">
+    tools:context="com.example.alexfanning.silentplaces.activities.DetailActivity">
 
 
     <Button
@@ -26,14 +26,12 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/zero"
-        android:text="@string/tv_place_name"
         android:id="@+id/place_name"
         />
     <TextView
         style="@style/tvSmall"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:text="@string/tv_place_add"
         android:layout_height="@dimen/zero"
         android:id="@+id/place_add"
         />

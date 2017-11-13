@@ -1,13 +1,16 @@
-package com.example.alexfanning.silentplaces;
+package com.example.alexfanning.silentplaces.activities;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,12 +19,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexfanning.silentplaces.R;
+import com.example.alexfanning.silentplaces.SilentPlace;
+import com.example.alexfanning.silentplaces.provider.PlaceContract;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 public class DetailActivity extends AppCompatActivity {
+
+    private static final String TAG =  DetailActivity.class.getSimpleName();
 
     private static final int PLACE_PICKER_REQUEST_CODE = 99;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 98;
@@ -52,7 +60,9 @@ public class DetailActivity extends AppCompatActivity {
         mBtnAdd = (Button)findViewById(R.id.btnAdd);
         mBtnClear = (Button)findViewById(R.id.btnClear);
         mPlaceName = (TextView)findViewById(R.id.place_name);
+        mPlaceName.setText(getString(R.string.tv_place_name,EMPTY_STRING));
         mPlaceAdd = (TextView)findViewById(R.id.place_add);
+        mPlaceAdd.setText(getString(R.string.tv_place_add, EMPTY_STRING));
         mDesc = (EditText) findViewById(R.id.et_desc);
         mSpinner = (Spinner) findViewById(R.id.spinner_detail);
     }
@@ -112,23 +122,57 @@ public class DetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "No Place Selected", Toast.LENGTH_SHORT).show();
                 return;
             }
-            mPlaceName.setText(getString(R.string.tv_place_name) + place.getName().toString());
-            mPlaceAdd.setText(getString(R.string.tv_place_name) + place.getAddress().toString());
+            mPlaceName.setText(getString(R.string.tv_place_name,place.getName().toString()));
+            mPlaceAdd.setText(getString(R.string.tv_place_add, place.getAddress().toString()));
             String placeID = place.getId();
-            mSilentPlace = new SilentPlace(Integer.parseInt(placeID));
+            mSilentPlace = new SilentPlace(placeID);
         }
     }
 
     public void addBtn_clicked(View v){
         String description;
-        int silentMode;
+        int silentMode = mSpinner.getSelectedItemPosition();
 
-        mSpinner.getSelectedItemPosition();
+        int indexOfPlaceName = 12;
+        String placeName = mPlaceName.getText().toString().substring(indexOfPlaceName);
+
+        if (placeName.equals(EMPTY_STRING)){
+            Toast.makeText(this, "Please select a location.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+
+
         if (mDesc.getText().equals(EMPTY_STRING)){
+            description = mPlaceName.getText().toString().substring(indexOfPlaceName);
+        }else{
+            description = mDesc.getText().toString();
+        }
+        mSilentPlace.setSilentMode(silentMode);
+        mSilentPlace.setDescription(description);
 
+        insertToDb();
+
+        finish();
+    }
+
+    private void insertToDb(){
+        ContentValues cv = new ContentValues();
+        cv.put(PlaceContract.PlaceEntry.COLUMN_PLACE_ID, mSilentPlace.get_id());
+        cv.put(PlaceContract.PlaceEntry.COLUMN_DESCRIPTION, mSilentPlace.getDescription());
+        cv.put(PlaceContract.PlaceEntry.COLUMN_SILENT_MODE, mSilentPlace.getSilentMode());
+
+        try{
+            Uri uri = getContentResolver().insert(PlaceContract.PlaceEntry.CONTENT_URI,cv);
+           // Toast.makeText(this, "Place inserted", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            Log.e(TAG, "insertToDb: ");
         }
     }
 
 
 
+
 }
+

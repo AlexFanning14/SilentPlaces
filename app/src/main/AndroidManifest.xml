@@ -3,6 +3,7 @@
     package="com.example.alexfanning.silentplaces">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +16,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA-paE34CfuwR_S_CJpawJmpoGEcOoDcKA" />
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".activities.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,14 +25,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailActivity"
+            android:name=".activities.DetailActivity"
             android:label="@string/lbl_place_detail"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".activities.MainActivity"/>
         </activity>
+
+        <provider
+            android:authorities="com.example.alexfanning.silentplaces"
+            android:name=".provider.PlaceProvider"
+            android:exported="false"/>
+
+
     </application>
 
 </manifest>

@@ -7,24 +7,24 @@ package com.example.alexfanning.silentplaces;
 public class SilentPlace {
 
 
-    private int _id;
+    private String _id;
     private String description;
-    private String silentMode;
-    public SilentPlace(int _id, String _desc, String _silentMode){
+    private int silentMode;
+    public SilentPlace(String _id, String _desc, int _silentMode){
         this._id = _id;
         description = _desc;
         silentMode = _silentMode;
     }
-    public SilentPlace(int _id){
+    public SilentPlace(String _id){
         this._id = _id;
 
     }
 
-    public int get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 
@@ -36,11 +36,11 @@ public class SilentPlace {
         this.description = description;
     }
 
-    public String getSilentMode() {
+    public int getSilentMode() {
         return silentMode;
     }
 
-    public void setSilentMode(String silentMode) {
+    public void setSilentMode(int silentMode) {
         this.silentMode = silentMode;
     }
 }
